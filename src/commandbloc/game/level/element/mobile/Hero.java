@@ -3,10 +3,12 @@ package commandbloc.game.level.element.mobile;
 import java.awt.Point;
 
 import commandbloc.game.level.element.Sprite;
+import commandbloc.game.play.UserOrder;
 
 public class Hero extends Mobile{
 	private final Point lastPosition;
-
+	private int life;
+	
 	public Hero() {
 		super(new Sprite("Player/player1.png", "Player/player1.png"));
 		this.lastPosition = new Point();
@@ -22,17 +24,22 @@ public class Hero extends Mobile{
 	@Override
 	public void moveUp() {
 		this.saveLastPosition();
+		this.openSensor(this.getX(), this.getY(), UserOrder.UP);
 		super.moveUp();
 	}
 
 	@Override
 	public void moveLeft() {
 		this.saveLastPosition();
+		this.openSensor(this.getX(), this.getY(), UserOrder.LEFT);
 		super.moveLeft();
+		this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
+
 	}
 
 	@Override
 	public void moveDown() {
+		this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
 		this.saveLastPosition();
 		super.moveDown();
 	}
@@ -40,11 +47,16 @@ public class Hero extends Mobile{
 	@Override
 	public void moveRight() {
 		this.saveLastPosition();
+		this.openSensor(this.getX(), this.getY(), UserOrder.RIGHT);
 		super.moveRight();
+		this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
+		
+		this.fall(this.getX(), this.getY());
 	}
 
 	public void moveBack() {
 		this.setX(this.lastPosition.x);
 		this.setY(this.lastPosition.y);
 	}
+	
 }

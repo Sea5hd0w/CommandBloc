@@ -70,7 +70,7 @@ public class Level extends Observable implements ILevel {
 	@Override
 	public void addMobile(final Mobile mobile, final int x, final int y) {
 		this.mobiles.add(mobile);
-		//mobile.setLevel(this, x, y);
+		mobile.setLevel(this, x, y);
 		this.setChanged();
 		this.notifyObservers();
 	}

@@ -13,6 +13,7 @@ public abstract class MotionLessElement extends Element{
 	private boolean sensor;
 	private boolean actuator;
 	private boolean connector;
+	private Orientation orientation;
 	
 	public MotionLessElement(final ISprite sprite, final Permeability permeability, final int fileSymbol, boolean sensor, boolean actuator, boolean connector) {
 		super(sprite, permeability);
@@ -22,6 +23,7 @@ public abstract class MotionLessElement extends Element{
 		this.sensor = sensor;
 		this.actuator = actuator;
 		this.connector = connector;
+		this.setOrientation(Orientation.UP);
 	}
 
 	public int getFileSymbol() {
@@ -209,5 +211,13 @@ public abstract class MotionLessElement extends Element{
 		this.openCloseSprite(openclose);
 		this.getLevel().setMobileHasChanged();
 		this.openCloseLinkedObject(openclose);
+	}
+
+	public Orientation getOrientation() {
+		return orientation;
+	}
+
+	protected void setOrientation(Orientation orientation) {
+		this.orientation = orientation;
 	}
 }

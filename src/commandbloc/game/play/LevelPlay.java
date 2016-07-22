@@ -62,25 +62,23 @@ public class LevelPlay implements IOrderPerformed {
 		switch (userOrder) {
 		case UP:
 			System.out.println("Hero : UP");
-			//this.getLevel().getHero().moveUp();
-			this.getLevel().getElements(3, 5).openclose(true);
+			this.getLevel().getHero().moveUp();
 			this.levelFrame.refresh();
 			break;
 		case RIGHT:
 			System.out.println("Hero : RIGHT");
-			this.getLevel().getElements(11, 4).openclose(true);
+			this.getLevel().getHero().moveRight();
 			this.levelFrame.refresh();
-			//this.getLevel().getHero().moveRight();
 			break;
 		case DOWN:
 			System.out.println("Hero : DOWN");
-			this.getLevel().getElements(9, 4).openclose(true);
+			this.getLevel().getHero().moveDown();
 			this.levelFrame.refresh();
-			//this.getLevel().getHero().moveDown();
 			break;
 		case LEFT:
 			System.out.println("Hero : LEFT");
-			//this.getLevel().getHero().moveLeft();
+			this.getLevel().getHero().moveLeft();
+			this.levelFrame.refresh();
 			break;
 		case NOP:
 			System.out.println("Hero : NOP");

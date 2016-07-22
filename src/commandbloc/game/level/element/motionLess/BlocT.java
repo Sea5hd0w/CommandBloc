@@ -6,7 +6,7 @@ import commandbloc.game.level.element.Sprite;
 public class BlocT extends MotionLessElement {
 
 	public BlocT() {
-		super(new Sprite("Bloc/BlocT.png", "Bloc/BlocT.png"), Permeability.BLOCKING, 0, false, false, false);
+		super(new Sprite("Bloc/BlocT.png", "Bloc/BlocT.png"), Permeability.PENETRABLE, 0, false, false, false);
 	}
 
 }

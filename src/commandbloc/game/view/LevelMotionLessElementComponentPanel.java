@@ -6,15 +6,12 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import commandbloc.game.level.ILevel;
 
-public class LevelPanel extends JPanel {
+public class LevelMotionLessElementComponentPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private ILevel level;
 	private int x;
@@ -22,8 +19,10 @@ public class LevelPanel extends JPanel {
 	private int xElement;
 	private int yElement;
 	
-	
-	public LevelPanel(ILevel level, int x, int y) {
+	public LevelMotionLessElementComponentPanel(ILevel level, int x, int y) {
+        super();
+		this.setOpaque( false);
+        this.setLayout(null );
 		this.level = level;
 		this.x=x;
 		this.y=y;
@@ -32,15 +31,10 @@ public class LevelPanel extends JPanel {
 	}
 
 	public void paint(Graphics g){
-			try {
-				Image img = ImageIO.read(new File("images/Background/FondMedium.png"));
-				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		setBackground(new Color(10,10,10,10));
 		for(int v = 0; v< this.xElement ;v++){
 			for(int w = 0; w< this.yElement ;w++){
-				if(this.level.getElements(w, v).getActuator() == false || this.level.getElements(w, v).getSensor() == false || this.level.getElements(w, v).getConnector() == false){
+				if(this.level.getElements(w, v).getActuator() == true || this.level.getElements(w, v).getSensor() == true || this.level.getElements(w, v).getConnector() == true){
 					Image img0 = this.level.getElements(w, v).getSprite().getSprite();
 					img0 = scaleImage(img0, x, y, xElement, yElement);
 					g.drawImage(img0, (w-1) * (y/yElement), (v-1) * (x/xElement), this);
@@ -48,6 +42,8 @@ public class LevelPanel extends JPanel {
 			}
 		}
 	}
+	
+	
 	
 	public static Image scaleImage(Image source, int x, int y, int xElement, int yElement) {
 		int  height = (x / xElement)*3;
@@ -58,5 +54,5 @@ public class LevelPanel extends JPanel {
 	    g.drawImage(source, 0, 0, width, height, null);
 	    g.dispose();
 	    return img;
-	}	
+	}
 }

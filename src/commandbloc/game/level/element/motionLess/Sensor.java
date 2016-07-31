@@ -5,7 +5,7 @@ import commandbloc.game.level.element.Permeability;
 
 public class Sensor extends MotionLessElement{
 
-	public Sensor(ISprite sprite, Permeability permeability, int fileSymbol) {
-		super(sprite, permeability, fileSymbol, true, false, false);
+	public Sensor(ISprite sprite, Permeability permeability, int fileSymbol, int x, int y) {
+		super(sprite, permeability, fileSymbol, true, false, false,x, y);
 	}
 }

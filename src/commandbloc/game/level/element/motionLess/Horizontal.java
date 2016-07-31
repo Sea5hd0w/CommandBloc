@@ -5,7 +5,7 @@ import commandbloc.game.level.element.Sprite;
 
 public class Horizontal extends Connector {
 
-	public Horizontal() {
-		super(new Sprite("Bloc/HorizontalR.png", "Bloc/HorizontalG.png"), Permeability.BLOCKING, 59);
+	public Horizontal(int x, int y) {
+		super(new Sprite("Bloc/HorizontalR.png", "Bloc/HorizontalG.png"), Permeability.BLOCKING, 59, x, y);
 	}
 }

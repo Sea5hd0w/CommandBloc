@@ -4,13 +4,13 @@ import java.awt.Point;
 
 import commandbloc.game.level.element.Sprite;
 import commandbloc.game.play.UserOrder;
+import commandbloc.game.view.LevelFrame;
 
 public class Hero extends Mobile{
 	private final Point lastPosition;
-	private int life;
 	
 	public Hero() {
-		super(new Sprite("Player/player1.png", "Player/player1.png"));
+		super(new Sprite("Player/player1A.png", "Player/player1D.png"));
 		this.lastPosition = new Point();
 		this.lastPosition.setLocation(this.getPosition().x, this.getPosition().y);
 	}
@@ -23,40 +23,60 @@ public class Hero extends Mobile{
 
 	@Override
 	public void moveUp() {
-		this.saveLastPosition();
-		this.openSensor(this.getX(), this.getY(), UserOrder.UP);
-		super.moveUp();
+		if(this.isLife() == true){
+			this.saveLastPosition();
+			super.moveUp();
+			this.openSensor(this.getX(), this.getY(), UserOrder.UP);
+		}
 	}
 
 	@Override
 	public void moveLeft() {
-		this.saveLastPosition();
-		this.openSensor(this.getX(), this.getY(), UserOrder.LEFT);
-		super.moveLeft();
-		this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
-
+		if(this.isLife() == true){
+			this.saveLastPosition();
+			if(this.isMovePossible(this.getX() - 1, this.getY()) == true){
+				this.openSensor(this.getX(), this.getY(), UserOrder.LEFT);
+				super.moveLeft();
+				this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
+				if(this.getLevel().getElements(this.getX(), this.getY()+1).getOnOff() == false && this.getLevel().getElements(this.getX(), this.getY()+1).getClass().getSimpleName().contains("Peaks") == true){
+					this.death();
+				}
+			} else {
+				this.openSensor(this.getX(), this.getY(), UserOrder.LEFT);
+			}
+			this.fall(this.getX(), this.getY());	
+		}
 	}
 
 	@Override
 	public void moveDown() {
-		this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
-		this.saveLastPosition();
-		super.moveDown();
+		if(this.isLife() == true){
+			this.saveLastPosition();
+			super.moveDown();
+			this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
+		}
 	}
 
 	@Override
 	public void moveRight() {
-		this.saveLastPosition();
-		this.openSensor(this.getX(), this.getY(), UserOrder.RIGHT);
-		super.moveRight();
-		this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
-		
-		this.fall(this.getX(), this.getY());
+		if(this.isLife() == true){
+			this.saveLastPosition();
+			if(this.isMovePossible(this.getX() + 1, this.getY()) == true){
+				this.openSensor(this.getX(), this.getY(), UserOrder.RIGHT);
+				super.moveRight();
+				this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
+				if(this.getLevel().getElements(this.getX(), this.getY()+1).getOnOff() == false && this.getLevel().getElements(this.getX(), this.getY()+1).getClass().getSimpleName().contains("Peaks") == true){
+					this.death();
+				}
+			} else {
+				this.openSensor(this.getX(), this.getY(), UserOrder.RIGHT);
+			}
+			this.fall(this.getX(), this.getY());			
+		}
 	}
 
 	public void moveBack() {
 		this.setX(this.lastPosition.x);
 		this.setY(this.lastPosition.y);
 	}
-	
 }

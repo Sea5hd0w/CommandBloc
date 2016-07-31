@@ -29,5 +29,6 @@ public interface ILevel {
 	public ArrayList<Mobile> getMobiles();
 
 	public void addObserver(Observer o);
-
+	
+	public void addElement(final MotionLessElement element, final int x, final int y);
 }

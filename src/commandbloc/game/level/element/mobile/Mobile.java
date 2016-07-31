@@ -9,13 +9,16 @@ import commandbloc.game.level.element.Permeability;
 import commandbloc.game.level.element.motionLess.Orientation;
 import commandbloc.game.play.IOrderPerformed;
 import commandbloc.game.play.UserOrder;
+import commandbloc.game.view.LevelFrame;
 
 public class Mobile extends Element implements IMobile {
 	private final Point position;
+	private boolean life;
 
 	public Mobile(final ISprite sprite) {
 		super(sprite, Permeability.BLOCKING);
 		this.position = new Point();
+		this.setLife(true);
 	}
 
 	@Override
@@ -53,8 +56,17 @@ public class Mobile extends Element implements IMobile {
 		this.setY(y);
 	}
 
-	private boolean isMovePossible(final int x, final int y) {
-		return (this.getLevel().getElements(x, y).getPermeability() != Permeability.BLOCKING);
+	protected boolean isMovePossible(final int x, final int y) {
+		if(this.getLevel().getElements(x, y+1).getClass().getSimpleName().contains("Piston") == true){
+			if(this.getLevel().getElements(x, y+1).getOnOff() == true){
+				return false;
+			} else{
+				return true;
+			}
+		}else if (this.getLevel().getElements(x, y).getPermeability() != Permeability.BLOCKING){
+			return true;
+		}
+		return false;
 	}
 
 	public void moveUp() {
@@ -139,6 +151,25 @@ public class Mobile extends Element implements IMobile {
 	}
 	
 	public void fall(int x, int y){
+		int x1 = x;
+		int y1 = y;
+		while(this.isMovePossible(x1, y1+1) == true){
+			this.moveDown();
+			y1 = y1 + 1;
+		}
+	}
+	
+	public void death(){
+		this.setLife(false);
+		this.openCloseSprite(true);
+		LevelFrame.lose();
+	}
 
+	public boolean isLife() {
+		return life;
+	}
+
+	private void setLife(boolean life) {
+		this.life = life;
 	}
 }

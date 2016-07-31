@@ -74,12 +74,14 @@ public class LevelFrame extends JFrame implements KeyListener, ILevelFrame {
 		this.test.repaint();
 	}
 
+	@SuppressWarnings("static-access")
 	public static void win(){
 		JOptionPane jop1;
 		jop1 = new JOptionPane();
 		jop1.showMessageDialog(null, "YOU WIN", "WINNER", JOptionPane.INFORMATION_MESSAGE);
 	}	
 	
+	@SuppressWarnings("static-access")
 	public static void lose(){
 		JOptionPane jop3;
 		jop3 = new JOptionPane();

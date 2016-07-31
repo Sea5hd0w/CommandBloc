@@ -5,7 +5,7 @@ import commandbloc.game.level.element.Sprite;
 
 public class DownRight extends Connector {
 
-	public DownRight() {
-		super(new Sprite("Bloc/DownRight.png", "Bloc/DownRight.png"), Permeability.BLOCKING, 51);
+	public DownRight(int x, int y) {
+		super(new Sprite("Bloc/DownRight.png", "Bloc/DownRight.png"), Permeability.BLOCKING, 51, x , y);
 	}
 }

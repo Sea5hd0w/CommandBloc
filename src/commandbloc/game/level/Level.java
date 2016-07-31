@@ -59,7 +59,8 @@ public class Level extends Observable implements ILevel {
 		return this.hero;
 	}
 
-	private void addElement(final MotionLessElement element, final int x, final int y) {
+	@Override
+	public void addElement(final MotionLessElement element, final int x, final int y) {
 		this.elements[x][y] = element;
 		if (element != null) {
 			element.setLevel(this);
@@ -92,7 +93,7 @@ public class Level extends Observable implements ILevel {
 		this.elements = new MotionLessElement[this.getWidth()][this.getHeight()];
 		while ((line = buffer.readLine()) != null) {
 			for (int x = 0; x < line.toCharArray().length; x++) {
-					this.addElement(MotionLessElements.getFromFileSymbol((int)line.toCharArray()[x]-48), x, numLine);
+					this.addElement(MotionLessElements.getFromFileSymbol((int)line.toCharArray()[x]-48, x, numLine), x, numLine);
 					System.out.println(this.getElements(x,numLine) + "\t\t élément créer en [" + x + "]:[" + numLine + "]");
 			}
 			numLine++;
@@ -136,6 +137,14 @@ public class Level extends Observable implements ILevel {
 				} else if(this.getElements(x, y).getSensor() == true){
 					System.out.println(this.getElements(x, y).getClass().getSimpleName() + " : " + x + " || " + y );
 					this.getElements(x, y).connectSensor(x, y);
+				} else if(this.getElements(x, y).getClass().getSimpleName().contains("TNT") == true){
+					for(int xTNT = x-1; xTNT <= x+1; xTNT++){
+						for(int yTNT = y-1; yTNT <= y+1; yTNT++){
+							if(this.getElements(xTNT, yTNT).getClass().getSimpleName().contains("TNT") == true){
+								this.getElements(x, y).addLinkedObject(xTNT, yTNT);
+							}
+						}
+					}
 				}
 			}
 		}

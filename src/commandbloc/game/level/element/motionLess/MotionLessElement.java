@@ -7,6 +7,8 @@ import commandbloc.game.level.element.ISprite;
 import commandbloc.game.level.element.Permeability;
 
 public abstract class MotionLessElement extends Element{
+	private int x;
+	private int y;
 	private final int fileSymbol;
 	private boolean onoff;
 	public ArrayList<MotionLessElement> linksobject;
@@ -15,7 +17,7 @@ public abstract class MotionLessElement extends Element{
 	private boolean connector;
 	private Orientation orientation;
 	
-	public MotionLessElement(final ISprite sprite, final Permeability permeability, final int fileSymbol, boolean sensor, boolean actuator, boolean connector) {
+	public MotionLessElement(final ISprite sprite, final Permeability permeability, final int fileSymbol, boolean sensor, boolean actuator, boolean connector, int x, int y) {
 		super(sprite, permeability);
 		this.linksobject = new ArrayList<MotionLessElement>();
 		this.fileSymbol = fileSymbol;
@@ -24,6 +26,8 @@ public abstract class MotionLessElement extends Element{
 		this.actuator = actuator;
 		this.connector = connector;
 		this.setOrientation(Orientation.UP);
+		this.setX(x);
+		this.setY(y);
 	}
 
 	public int getFileSymbol() {
@@ -34,7 +38,7 @@ public abstract class MotionLessElement extends Element{
 		return this.onoff;
 	}
 	
-	private void setOnOff(boolean onoff){
+	protected void setOnOff(boolean onoff){
 		this.onoff = onoff;
 	}
 	
@@ -61,10 +65,6 @@ public abstract class MotionLessElement extends Element{
 	protected void setConnector(boolean connector){
 		this.connector = connector;
 	}
-	
-	
-	
-	
 	
 	public void addLinkedObject(MotionLessElement motionlesselement){
 		this.linksobject.add(motionlesselement);
@@ -197,12 +197,7 @@ public abstract class MotionLessElement extends Element{
 	}
 
 	public void openclose(boolean openclose, int x, int y){
-		System.out.println("J'ouvre/Je ferme l'élément aux coordonnées [" + x + "]:[" + y + "]");
-		this.setOnOff(openclose);
-		this.openCloseSprite(openclose);
-		this.getLevel().getElements(x, y).setOnOff(openclose);
-		this.getLevel().setMobileHasChanged();
-		this.openCloseLinkedObject(openclose);
+		this.getLevel().getElements(x, y).openclose(openclose);
 	}
 
 	public void openclose(boolean openclose){
@@ -219,5 +214,21 @@ public abstract class MotionLessElement extends Element{
 
 	protected void setOrientation(Orientation orientation) {
 		this.orientation = orientation;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 }

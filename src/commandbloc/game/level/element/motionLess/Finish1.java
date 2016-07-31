@@ -6,8 +6,8 @@ import commandbloc.game.view.LevelFrame;
 
 public class Finish1 extends Sensor {
 
-	public Finish1() {
-		super(new Sprite("Bloc/Finish1R.png", "Bloc/Finish1G.png"), Permeability.BLOCKING, 2);
+	public Finish1(int x, int y) {
+		super(new Sprite("Bloc/Finish1R.png", "Bloc/Finish1G.png"), Permeability.BLOCKING, 2, x, y);
 	}
 	
 	@Override
@@ -15,5 +15,4 @@ public class Finish1 extends Sensor {
 		super.openclose(openclose);
 		LevelFrame.win();
 	}
-
 }

@@ -5,7 +5,7 @@ import commandbloc.game.level.element.Sprite;
 
 public class Cross extends Connector {
 
-	public Cross() {
-		super(new Sprite("Bloc/CrossR.png", "Bloc/CrossG.png"), Permeability.BLOCKING, 49);
+	public Cross(int x, int y) {
+		super(new Sprite("Bloc/CrossR.png", "Bloc/CrossG.png"), Permeability.BLOCKING, 49, x, y);
 	}
 }

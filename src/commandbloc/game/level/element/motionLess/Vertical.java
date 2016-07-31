@@ -5,8 +5,8 @@ import commandbloc.game.level.element.Sprite;
 
 public class Vertical extends Connector {
 
-	public Vertical() {
-		super(new Sprite("Bloc/VerticalR.png", "Bloc/VerticalG.png"), Permeability.BLOCKING, 58);
+	public Vertical(int x, int y) {
+		super(new Sprite("Bloc/VerticalR.png", "Bloc/VerticalG.png"), Permeability.BLOCKING, 58, x, y);
 	}
 
 }

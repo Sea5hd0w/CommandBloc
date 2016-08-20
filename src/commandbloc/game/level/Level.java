@@ -10,15 +10,15 @@ import java.util.Observable;
 import commandbloc.game.level.element.Element;
 import commandbloc.game.level.element.mobile.Hero;
 import commandbloc.game.level.element.mobile.Mobile;
-import commandbloc.game.level.element.motionLess.ContinuousPressureSensor1;
-import commandbloc.game.level.element.motionLess.Lever1;
 import commandbloc.game.level.element.motionLess.MotionLessElement;
 import commandbloc.game.level.element.motionLess.MotionLessElements;
-import commandbloc.game.level.element.motionLess.Peaks1;
-import commandbloc.game.level.element.motionLess.Piston1;
-import commandbloc.game.level.element.motionLess.Piston2;
-import commandbloc.game.level.element.motionLess.PressureSensor1;
-import commandbloc.game.level.element.motionLess.TNT1;
+import commandbloc.game.level.element.motionLess.components.ContinuousPressureSensor1;
+import commandbloc.game.level.element.motionLess.components.Lever1;
+import commandbloc.game.level.element.motionLess.components.Peaks1;
+import commandbloc.game.level.element.motionLess.components.Piston1;
+import commandbloc.game.level.element.motionLess.components.Piston2;
+import commandbloc.game.level.element.motionLess.components.PressureSensor1;
+import commandbloc.game.level.element.motionLess.components.TNT1;
 
 public class Level extends Observable implements ILevel {
 	public MotionLessElement				elements[][];

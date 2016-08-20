@@ -13,11 +13,16 @@ import commandbloc.game.view.LevelFrame;
 
 public class Mobile extends Element implements IMobile {
 	private final Point position;
+	private final Point lastPosition;
+
 	private boolean life;
 
 	public Mobile(final ISprite sprite) {
 		super(sprite, Permeability.BLOCKING);
 		this.position = new Point();
+		this.lastPosition = new Point();
+		this.lastPosition.setLocation(this.getPosition().x, this.getPosition().y);
+
 		this.setLife(true);
 	}
 
@@ -50,45 +55,62 @@ public class Mobile extends Element implements IMobile {
 		return this.position;
 	}
 
+	public Point getLastPosition(){
+		return this.lastPosition;
+	}
+	
+	private void saveLastPosition() {
+		if ((this.lastPosition.getX() != this.getPosition().getX()) || (this.lastPosition.getY() != this.getPosition().getY())) {
+			this.lastPosition.setLocation(this.getPosition().x, this.getPosition().y);
+		}
+	}
+	
 	public void setLevel(final ILevel level, final int x, final int y) {
 		super.setLevel(level);
 		this.setX(x);
 		this.setY(y);
+		this.saveLastPosition();
 	}
 
 	protected boolean isMovePossible(final int x, final int y) {
-		if(this.getLevel().getElements(x, y+1).getClass().getSimpleName().contains("Piston") == true){
-			if(this.getLevel().getElements(x, y+1).getOnOff() == true){
-				return false;
-			} else{
+		if(x < this.getLevel().getWidth()-1 && x >= 0 && y < this.getLevel().getHeight()-1 && y >= 0 ){
+			if(this.getLevel().getElements(x, y+1).getClass().getSimpleName().contains("Piston") == true && (y+1) < this.getLevel().getHeight()){
+				if(this.getLevel().getElements(x, y+1).getOnOff() == true){
+					return false;
+				} else{
+					return true;
+				}
+			}else if (this.getLevel().getElements(x, y).getPermeability() != Permeability.BLOCKING){
 				return true;
 			}
-		}else if (this.getLevel().getElements(x, y).getPermeability() != Permeability.BLOCKING){
-			return true;
 		}
 		return false;
 	}
 
 	public void moveUp() {
 		if (this.isMovePossible(this.getX(), this.getY() - 1)) {
+			this.saveLastPosition();
 			this.setY(this.getY() - 1);
 		}
 	}
 
 	public void moveLeft() {
 		if (this.isMovePossible(this.getX() - 1, this.getY())) {
+			this.saveLastPosition();
 			this.setX(this.getX() - 1);
 		}
 	}
 
 	public void moveDown() {
 		if (this.isMovePossible(this.getX(), this.getY() + 1)) {
+			this.saveLastPosition();
 			this.setY(this.getY() + 1);
 		}
 	}
 
 	public void moveRight() {
 		if (this.isMovePossible(this.getX() + 1, this.getY())) {
+			this.saveLastPosition();
 			this.setX(this.getX() + 1);
 		}
 	}
@@ -106,7 +128,9 @@ public class Mobile extends Element implements IMobile {
 	}
 	
 	protected void openSensorUp(int x, int y){
-		y = y - 1;
+		if(y != 0){
+			y = y - 1;
+		}
 		if(this.getLevel().getElements(x, y).getSensor() == true && this.getLevel().getElements(x, y).getOrientation() == Orientation.DOWN){
 			if(this.getLevel().getElements(x, y).getOnOff() == true){
 				this.getLevel().getElements(x, y).openclose(false);
@@ -117,8 +141,9 @@ public class Mobile extends Element implements IMobile {
 	}
 	
 	protected void openSensorDown(int x, int y){
-		y = y + 1;
-		
+		if(y < this.getLevel().getHeight()){
+			y = y + 1;	
+		}
 		if(this.getLevel().getElements(x, y).getSensor() == true && this.getLevel().getElements(x, y).getOrientation() == Orientation.UP){
 			if(this.getLevel().getElements(x, y).getOnOff() == true){
 				this.getLevel().getElements(x, y).openclose(false);
@@ -129,7 +154,10 @@ public class Mobile extends Element implements IMobile {
 	}
 	
 	protected void openSensorRight(int x, int y){
-		x = x + 1;
+		if(x < this.getLevel().getWidth()){
+			x = x + 1;
+		}
+
 		if(this.getLevel().getElements(x, y).getSensor() == true && this.getLevel().getElements(x, y).getOrientation() == Orientation.LEFT){
 			if(this.getLevel().getElements(x, y).getOnOff() == true){
 				this.getLevel().getElements(x, y).openclose(false);
@@ -140,7 +168,9 @@ public class Mobile extends Element implements IMobile {
 	}
 	
 	protected void openSensorLeft(int x, int y){
-		x = x - 1;
+		if(x != 0){
+			x = x - 1;
+		}
 		if(this.getLevel().getElements(x, y).getSensor() == true && this.getLevel().getElements(x, y).getOrientation() == Orientation.RIGHT){
 			if(this.getLevel().getElements(x, y).getOnOff() == true){
 				this.getLevel().getElements(x, y).openclose(false);
@@ -160,9 +190,11 @@ public class Mobile extends Element implements IMobile {
 	}
 	
 	public void death(){
-		this.setLife(false);
-		this.openCloseSprite(true);
-		LevelFrame.lose();
+		if(this.life == true){
+			this.setLife(false);
+			this.openCloseSprite(true);
+			LevelFrame.lose();			
+		}
 	}
 
 	public boolean isLife() {

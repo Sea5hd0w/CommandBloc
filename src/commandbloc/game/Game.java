@@ -2,6 +2,7 @@ package commandbloc.game;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
 
@@ -17,7 +18,13 @@ public class Game implements Runnable {
 	private ILevelFrame				levelFrame;
 
 	public Game() throws IOException, SQLException {
-		this.level = new Level("Niveau_0.txt");
+
+		/*Scanner sc = new Scanner(System.in);
+		System.out.println("Level a ouvrir? ");
+		String str = sc.nextLine();*/
+		String str = "Niveau_0";
+		
+		this.level = new Level(str + ".txt");
 		this.levelPlay = new LevelPlay(this.level, 0);
 		SwingUtilities.invokeLater(this);
 	}

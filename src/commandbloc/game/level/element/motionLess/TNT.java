@@ -4,14 +4,16 @@ import commandbloc.game.level.element.Permeability;
 import commandbloc.game.level.element.Sprite;
 import commandbloc.game.level.element.mobile.Mobile;
 
-public class TNT1 extends Actuator implements Runnable {
+public class TNT extends Actuator implements Runnable {
 	private boolean openclose;
 	private int time;
+	private int action;
 	
-	public TNT1(int x, int y, int time) {
+	public TNT(int x, int y, int time, int action) {
 		super(new Sprite("Bloc/TNT1.png", "Bloc/BlocT.png"), Permeability.BLOCKING, 9, x, y);
 		this.openclose = false;
 		this.time = time;
+		this.action = action;
 	}
 	
 	@Override
@@ -33,13 +35,15 @@ public class TNT1 extends Actuator implements Runnable {
 		}
 		if(this.openclose == true){
 			super.openclose(openclose);
-			for(int x = this.getX()-1; x <= this.getX()+1; x++){
-				for(int y = this.getY()-1; y <= this.getY()+1; y++){
-					this.getLevel().addElement(MotionLessElements.BLOCT, x, y);
-					for (Mobile s : this.getLevel().getMobiles()) {
-						 if(s.getX() == x && s.getY() == y){
-							 s.death();
-						 }
+			for(int x = this.getX()-action; x <= this.getX()+action; x++){
+				for(int y = this.getY()-action; y <= this.getY()+action; y++){
+					if(x >= 0 && x < this.getLevel().getWidth() && y >= 0 && y < this.getLevel().getHeight()){
+						this.getLevel().addElement(MotionLessElements.BLOCT, x, y);
+						for (Mobile s : this.getLevel().getMobiles()) {
+							 if(s.getX() == x && s.getY() == y){
+								 s.death();
+							 }
+						}
 					}
 				}
 			}

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import commandbloc.game.level.ILevel;
 import commandbloc.game.level.element.mobile.Hero;
+import commandbloc.game.level.element.mobile.monsters.Monster1;
 import commandbloc.game.view.ILevelFrame;
 
 public class LevelPlay implements IOrderPerformed {
@@ -20,20 +21,10 @@ public class LevelPlay implements IOrderPerformed {
 		this.level = level;
 		//this.daoLevel.findMobile(lvl, 1);
 		//this.level.addMobile(new Hero(0), this.daoLevel.getX()-1 , this.daoLevel.getY()-1);
-		this.level.addMobile(new Hero(), 1, 4);
-	}
-
-	public void play() throws InterruptedException
-	{
-		
-		for(;;)
-		{
-			System.out.println("Boucle play() en marche");
-			/*for(MonsterMobile m : this.level.getMobiles()){
-				m.getAnimate(m);
-			}
-			this.level.destructCollected();*/
-		}
+		this.level.addMobile(new Hero(), 1, 1);
+		//this.level.addMobile(new Monster1(), 23, 3);
+		//this.level.addMobile(new Monster1(), 22, 3);
+		System.out.println("//////////////////////////////////////////ICI\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 	}
 
 	public ILevel getLevel() {

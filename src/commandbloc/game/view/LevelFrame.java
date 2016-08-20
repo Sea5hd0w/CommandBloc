@@ -32,20 +32,23 @@ public class LevelFrame extends JFrame implements KeyListener, ILevelFrame {
 
 
 	public LevelFrame(final String title, final ILevel level, final IOrderPerformed levelPlay) {
-		this.setTitle(title);
-		this.setSize(2000,1000);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.levelPlay = levelPlay;
 		this.level = level;
 		
-		this.getContentPane().setBackground(new Color(210,184,139));
-		
+		this.setTitle(title);
+		this.setSize(this.level.getWidth()*25,(this.level.getHeight()*40));
+		//this.setSize(500,250);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		
 		this.test = new Test(level, this.level.getMobiles() , this.getHeight(), this.getWidth());
 		this.add(this.test);
 		
-		
+		/*
+		this.levelBackgroundPanel = new LevelBackgroundPanel();
+		this.add(this.levelBackgroundPanel);
+		*/
 		/*
 		this.levelBackgroundPanel = new LevelBackgroundPanel();
 		this.add(this.levelBackgroundPanel);
@@ -73,7 +76,7 @@ public class LevelFrame extends JFrame implements KeyListener, ILevelFrame {
 	public void refresh() {
 		this.test.repaint();
 	}
-
+	
 	@SuppressWarnings("static-access")
 	public static void win(){
 		JOptionPane jop1;

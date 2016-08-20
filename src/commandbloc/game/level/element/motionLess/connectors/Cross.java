@@ -1,7 +1,8 @@
-package commandbloc.game.level.element.motionLess;
+package commandbloc.game.level.element.motionLess.connectors;
 
 import commandbloc.game.level.element.Permeability;
 import commandbloc.game.level.element.Sprite;
+import commandbloc.game.level.element.motionLess.Connector;
 
 public class Cross extends Connector {
 

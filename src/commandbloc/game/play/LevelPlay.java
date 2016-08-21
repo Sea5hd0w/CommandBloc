@@ -22,7 +22,7 @@ public class LevelPlay implements IOrderPerformed {
 		//this.daoLevel.findMobile(lvl, 1);
 		//this.level.addMobile(new Hero(0), this.daoLevel.getX()-1 , this.daoLevel.getY()-1);
 		this.level.addMobile(new Hero(), 1, 1);
-		//this.level.addMobile(new Monster1(), 23, 3);
+		this.level.addMobile(new Monster1(), 23, 3);
 		//this.level.addMobile(new Monster1(), 22, 3);
 		System.out.println("//////////////////////////////////////////ICI\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 	}

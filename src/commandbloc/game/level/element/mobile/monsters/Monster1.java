@@ -4,13 +4,10 @@ import commandbloc.game.level.element.Sprite;
 import commandbloc.game.level.element.mobile.Monster;
 import commandbloc.game.play.UserOrder;
 
-public class Monster1 extends Monster implements Runnable{
+public class Monster1 extends Monster{
 
 	public Monster1() {
 		super(new Sprite("Monster_PNJ/Monster1A.png", "Monster_PNJ/Monster1D.png"));
-		Thread threadMonster1 =  new Thread(this) ;
-		threadMonster1.start();
-
 	}
 
 	@Override
@@ -54,7 +51,6 @@ public class Monster1 extends Monster implements Runnable{
 	public void moveUp() {
 		if(this.isLife() == true){
 			super.moveUp();
-			this.openSensor(this.getX(), this.getY(), UserOrder.UP);
 		}
 	}
 
@@ -62,16 +58,12 @@ public class Monster1 extends Monster implements Runnable{
 	public void moveLeft() {
 		if(this.isLife() == true){
 			if(this.isMovePossible(this.getX() - 1, this.getY()) == true){
-				this.openSensor(this.getX(), this.getY(), UserOrder.LEFT);
 				super.moveLeft();
-				this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
 				if(this.getLevel().getElements(this.getX(), this.getY()+1).getOnOff() == false && (this.getLevel().getElements(this.getX(), this.getY()+1).getClass().getSimpleName().contains("Peaks") == true ||this.getLevel().getElements(this.getX(), this.getY()).getClass().getSimpleName().contains("Peaks") == true)){
 					this.death();
 				}
-			} else {
-				this.openSensor(this.getX(), this.getY(), UserOrder.LEFT);
+			this.fall(this.getX(), this.getY());
 			}
-			this.fall(this.getX(), this.getY());	
 		}
 	}
 
@@ -82,7 +74,6 @@ public class Monster1 extends Monster implements Runnable{
 			if(this.getLevel().getElements(this.getX(), this.getY()+1).getOnOff() == false && this.getLevel().getElements(this.getX(), this.getY()+1).getClass().getSimpleName().contains("Peaks") == true){
 				this.death();
 			}
-			this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
 		}
 	}
 
@@ -90,14 +81,10 @@ public class Monster1 extends Monster implements Runnable{
 	public void moveRight() {
 		if(this.isLife() == true){
 			if(this.isMovePossible(this.getX() + 1, this.getY()) == true){
-				this.openSensor(this.getX(), this.getY(), UserOrder.RIGHT);
 				super.moveRight();
-				this.openSensor(this.getX(), this.getY(), UserOrder.DOWN);
 				if(this.getLevel().getElements(this.getX(), this.getY()+1).getOnOff() == false && this.getLevel().getElements(this.getX(), this.getY()+1).getClass().getSimpleName().contains("Peaks") == true){
 					this.death();
 				}
-			} else {
-				this.openSensor(this.getX(), this.getY(), UserOrder.RIGHT);
 			}
 			this.fall(this.getX(), this.getY());			
 		}
